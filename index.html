@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HolaLoula</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <header>
+    <h1>HolaLoula</h1>
+    <div class="menu-hamburguesa" id="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+  </header>
+
+  <nav id="nav-menu">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="acerca.html">Acerca de Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="galeria-imagenes.html">Galería de Imágenes</a></li>
+      <li><a href="galeria-videos.html">Galería de Videos</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="intro-contenedor">
+      <div class="intro-izquierda">
+        <h2>Bienvenidos a HolaLoula</h2>
+        <p>Somos especialistas en la fabricación de artículos creativos, como regalos y adornos en globos para graduaciones, aniversarios y ocasiones especiales.</p>
+        <div class="slider">
+          <button class="prev">&#10094;</button>
+          <img id="slider-img" src="img/producto1.jpg" alt="Ejemplo de producto">
+          <button class="next">&#10095;</button>
+        </div>
+      </div>
+      <div class="intro-derecha animado">
+        <h2>Síguenos en Redes Sociales</h2>
+        <div class="iconos">
+          <a href="https://www.facebook.com" target="_blank"><img src="img/facebook.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/hola.loula92/" target="_blank"><img src="img/instagram.png" alt="Instagram"></a>
+          <a href="https://www.tiktok.com" target="_blank"><img src="img/tiktok.png" alt="TikTok"></a>
+        </div>
+
+        <section class="comentarios">
+          <h2>Comentarios</h2>
+          <form id="comentario-form">
+            <input type="text" id="nombre" placeholder="Tu nombre" required>
+            <textarea id="mensaje" placeholder="Escribe tu comentario..." required></textarea>
+            <button type="submit">Enviar</button>
+          </form>
+          <ul id="lista-comentarios"></ul>
+        </section>
+      </div>
+    </section>
+
+    <section class="destacados">
+      <h2>Lo que ofrecemos</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="img/globos.jpg" alt="Globos">
+          <h3>Adornos en Globos</h3>
+          <p>Decoraciones personalizadas para cualquier evento.</p>
+        </div>
+        <div class="card">
+          <img src="img/regalos.jpg" alt="Regalos">
+          <h3>Regalos Especiales</h3>
+          <p>Ideas únicas para aniversarios y celebraciones.</p>
+        </div>
+        <div class="card">
+          <img src="img/eventos.jpg" alt="Eventos">
+          <h3>Eventos y Celebraciones</h3>
+          <p>Nos encargamos de que tu evento sea inolvidable.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 HolaLoula</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script type="module" src="firebase.js"></script>
+</body>
+</html>
+

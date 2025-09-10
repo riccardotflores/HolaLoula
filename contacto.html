@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - HolaLoula</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>HolaLoula</h1>
+    <div class="menu-hamburguesa" id="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+  </header>
+
+  <nav id="nav-menu">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="acerca.html">Acerca de Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="galeria-imagenes.html">Galería de Imágenes</a></li>
+      <li><a href="galeria-videos.html">Galería de Videos</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="bienvenida">
+      <h2>Contacto</h2>
+      <p>Envíanos un mensaje por WhatsApp:</p>
+      <form id="whatsapp-form">
+        <input type="text" id="nombre-wp" placeholder="Tu nombre" required>
+        <textarea id="mensaje-wp" placeholder="Escribe tu mensaje..." required></textarea>
+        <button type="submit">Enviar por WhatsApp</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 HolaLoula</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script>
+    const wpForm = document.getElementById("whatsapp-form");
+    if (wpForm) {
+      wpForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById("nombre-wp").value.trim();
+        const mensaje = document.getElementById("mensaje-wp").value.trim();
+        const numero = "5211234567890";
+        if (nombre && mensaje) {
+          const texto = `Hola, soy ${nombre} y quiero decirte: ${mensaje}`;
+          window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
+          wpForm.reset();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
