@@ -25,19 +25,12 @@ const form = document.getElementById("comentario-form");
 const lista = document.getElementById("lista-comentarios");
 const comentariosRef = collection(db, "comentarios");
 
-if (form) {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const nombre = document.getElementById("nombre").value.trim();
-    const mensaje = document.getElementById("mensaje").value.trim();
-    if (nombre && mensaje) {
-      await addDoc(comentariosRef, { nombre, mensaje, fecha: serverTimestamp() });
-      form.reset();
-    }
-  });
+let unsubscribeComentarios = null; // Para controlar el listener
 
+function renderizarComentarios() {
+  if (unsubscribeComentarios) unsubscribeComentarios(); // Si ya hay un listener, lo quitamos
   const q = query(comentariosRef, orderBy("fecha", "desc"));
-  onSnapshot(q, (snapshot) => {
+  unsubscribeComentarios = onSnapshot(q, (snapshot) => {
     lista.innerHTML = "";
     snapshot.forEach(docSnap => {
       const data = docSnap.data();
@@ -45,6 +38,7 @@ if (form) {
       li.style.display = "flex";
       li.style.alignItems = "center";
       li.style.justifyContent = "space-between";
+      li.style.transition = "opacity 0.4s ease, transform 0.4s ease";
       li.innerHTML = `<span><strong>${data.nombre}:</strong> ${data.mensaje}</span>`;
 
       // 🔹 Si es admin, mostrar icono SVG de eliminar
@@ -57,12 +51,18 @@ if (form) {
         `;
         btn.style.cursor = "pointer";
         btn.title = "Eliminar comentario";
+
         btn.onmouseover = () => btn.querySelector("svg").setAttribute("fill", "#ff6f61");
         btn.onmouseout = () => btn.querySelector("svg").setAttribute("fill", "gray");
+
         btn.onclick = async () => {
           if(confirm("¿Seguro quieres eliminar este comentario?")){
-            await deleteDoc(doc(db, "comentarios", docSnap.id));
-            alert("Comentario eliminado ✅");
+            // 🔹 Animación antes de borrar
+            li.style.opacity = "0";
+            li.style.transform = "translateX(-20px)";
+            setTimeout(async () => {
+              await deleteDoc(doc(db, "comentarios", docSnap.id));
+            }, 400); // coincide con la transición
           }
         };
         li.appendChild(btn);
@@ -71,6 +71,19 @@ if (form) {
       lista.appendChild(li);
     });
   });
+}
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+    if (nombre && mensaje) {
+      await addDoc(comentariosRef, { nombre, mensaje, fecha: serverTimestamp() });
+      form.reset();
+    }
+  });
+  renderizarComentarios(); // Primera carga
 }
 
 // --- LOGIN FIREBASE ---
@@ -112,5 +125,8 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("login-section").style.display = "block";
     logoutBtn.style.display = "none";
   }
+
+  // 🔹 Cada vez que cambia el estado del login, re-renderizamos los comentarios
+  renderizarComentarios();
 });
 
