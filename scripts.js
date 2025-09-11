@@ -16,7 +16,7 @@ overlay?.addEventListener("click", () => {
 // SLIDER
 document.addEventListener("DOMContentLoaded", () => {
   const sliderImg = document.getElementById("slider-img");
-  if (!sliderImg) return; // Solo ejecutar si existe
+  if (!sliderImg) return;
 
   const imagenes = ["img/producto1.jpg","img/producto2.jpg","img/producto3.jpg"];
   const prevBtn = document.querySelector(".prev");
