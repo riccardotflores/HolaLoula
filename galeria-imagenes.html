@@ -29,30 +29,15 @@
     </nav>
 
     <main>
-        <section class="galeria">
+        <section class="bienvenida">
             <h2>Galería de Imágenes</h2>
-            <div class="riel" id="riel">
-                <div class="item" data-id="globos">
-                    <img src="img/globos.jpg" alt="Globos">
-                    <button class="like-btn">❤️ <span>0</span></button>
-                </div>
-                <div class="item" data-id="regalos">
-                    <img src="img/regalos.jpg" alt="Regalos">
-                    <button class="like-btn">❤️ <span>0</span></button>
-                </div>
-                <div class="item" data-id="eventos">
-                    <img src="img/eventos.jpg" alt="Eventos">
-                    <button class="like-btn">❤️ <span>0</span></button>
-                </div>
+            <p>Aquí podrás ver algunos de nuestros productos y decoraciones:</p>
+            <div class="cards">
+                <div class="card"><img src="img/globos.jpg" alt="Globos"></div>
+                <div class="card"><img src="img/regalos.jpg" alt="Regalos"></div>
+                <div class="card"><img src="img/eventos.jpg" alt="Eventos"></div>
             </div>
         </section>
-
-        <!-- Modal para ampliar imagen -->
-        <div id="modal" class="modal">
-            <span class="cerrar">&times;</span>
-            <img class="modal-content" id="modal-img">
-            <div id="modal-caption"></div>
-        </div>
     </main>
 
     <footer>
@@ -60,7 +45,6 @@
     </footer>
 
     <script src="scripts.js"></script>
-    <script type="module" src="firebase-galeria.js"></script>
 </body>
 </html>
 

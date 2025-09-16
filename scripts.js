@@ -1,51 +1,46 @@
-// --- GALERÍA INSTAGRAM STYLE ---
+// MENU HAMBURGUESA
+const menuBtn = document.getElementById("menu-btn");
+const navMenu = document.getElementById("nav-menu");
+const overlay = document.getElementById("overlay");
+
+menuBtn?.addEventListener("click", () => {
+  navMenu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+});
+
+overlay?.addEventListener("click", () => {
+  navMenu.classList.remove("activo");
+  overlay.classList.remove("activo");
+});
+
+// SLIDER
 document.addEventListener("DOMContentLoaded", () => {
-  const riel = document.getElementById("riel");
-  if (!riel) return;
+  const sliderImg = document.getElementById("slider-img");
+  if (!sliderImg) return;
 
-  let scrollInterval;
+  const imagenes = ["img/producto1.jpg","img/producto2.jpg","img/producto3.jpg"];
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  let index = 0;
+  let intervalo;
 
-  // Auto-scroll
-  function iniciarRiel() {
-    scrollInterval = setInterval(() => {
-      riel.scrollBy({ left: 220, behavior: "smooth" });
-      if (riel.scrollLeft + riel.clientWidth >= riel.scrollWidth) {
-        riel.scrollTo({ left: 0, behavior: "smooth" });
-      }
-    }, 3000);
+  function mostrarImagen(i) {
+    sliderImg.classList.remove("active");
+    setTimeout(() => {
+      sliderImg.src = imagenes[i];
+      sliderImg.classList.add("active");
+    }, 300);
   }
 
-  function detenerRiel() {
-    clearInterval(scrollInterval);
-  }
+  function siguiente() { index = (index + 1) % imagenes.length; mostrarImagen(index); }
+  function anterior() { index = (index - 1 + imagenes.length) % imagenes.length; mostrarImagen(index); }
+  function iniciarSlider() { intervalo = setInterval(siguiente, 4000); }
+  function reiniciarSlider() { clearInterval(intervalo); iniciarSlider(); }
 
-  iniciarRiel();
+  prevBtn?.addEventListener("click", () => { anterior(); reiniciarSlider(); });
+  nextBtn?.addEventListener("click", () => { siguiente(); reiniciarSlider(); });
 
-  // Modal
-  const modal = document.getElementById("modal");
-  const modalImg = document.getElementById("modal-img");
-  const caption = document.getElementById("modal-caption");
-  const cerrar = document.querySelector(".cerrar");
-
-  riel.querySelectorAll(".item img").forEach(img => {
-    img.addEventListener("click", () => {
-      detenerRiel();
-      modal.style.display = "block";
-      modalImg.src = img.src;
-      caption.textContent = img.alt;
-    });
-  });
-
-  cerrar.addEventListener("click", () => {
-    modal.style.display = "none";
-    iniciarRiel();
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      iniciarRiel();
-    }
-  });
+  mostrarImagen(index);
+  iniciarSlider();
 });
 
