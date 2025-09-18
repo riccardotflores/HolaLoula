@@ -145,18 +145,19 @@ function initLikes() {
   const modalCount = document.getElementById("modal-count");
   let currentId = null;
 
-  // Escuchar likes en tiempo real
+  // Escuchar likes en tiempo real y abrir modal
   stories.forEach(story => {
     const id = story.dataset.id;
     const likeBox = story.querySelector(".like-count");
+
     onSnapshot(doc(db, "likes", id), (snap) => {
       likeBox.textContent = snap.exists() ? snap.data().count : 0;
     });
 
-    // Abrir modal al clickear
+    // Abrir modal al clickear en la story
     story.addEventListener("click", () => {
       currentId = id;
-      modal.style.display = "flex";
+      modal.classList.add("show");
       modalImg.src = story.querySelector("img").src;
 
       onSnapshot(doc(db, "likes", id), (snap) => {
@@ -165,14 +166,14 @@ function initLikes() {
     });
   });
 
-  // Cerrar modal
+  // Cerrar modal con X o clic fuera
   modalClose.addEventListener("click", () => {
-    modal.style.display = "none";
+    modal.classList.remove("show");
     currentId = null;
   });
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
-      modal.style.display = "none";
+      modal.classList.remove("show");
       currentId = null;
     }
   });
@@ -190,6 +191,5 @@ function initLikes() {
   });
 }
 
-// Iniciar likes después de cargar la página
 document.addEventListener("DOMContentLoaded", initLikes);
 
