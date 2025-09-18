@@ -135,7 +135,11 @@ import {
 
 const likesRef = collection(db, "likes");
 
-// --- LIKES ---
+import { 
+  doc, getDoc, setDoc, updateDoc, onSnapshot 
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+// === LIKES & MODAL ===
 function initLikes() {
   const stories = document.querySelectorAll(".story");
   const modal = document.getElementById("modal");
@@ -145,16 +149,17 @@ function initLikes() {
   const modalCount = document.getElementById("modal-count");
   let currentId = null;
 
-  // Escuchar likes en tiempo real y abrir modal
+  // Escuchar likes en tiempo real
   stories.forEach(story => {
     const id = story.dataset.id;
-    const likeBox = story.querySelector(".like-count");
+    const likeCountEl = story.querySelector(".like-count");
 
+    // 🔹 Listener de likes
     onSnapshot(doc(db, "likes", id), (snap) => {
-      likeBox.textContent = snap.exists() ? snap.data().count : 0;
+      likeCountEl.textContent = snap.exists() ? snap.data().count : 0;
     });
 
-    // Abrir modal al clickear en la story
+    // 🔹 Abrir modal
     story.addEventListener("click", () => {
       currentId = id;
       modal.classList.add("show");
@@ -166,7 +171,7 @@ function initLikes() {
     });
   });
 
-  // Cerrar modal con X o clic fuera
+  // 🔹 Cerrar modal
   modalClose.addEventListener("click", () => {
     modal.classList.remove("show");
     currentId = null;
@@ -178,7 +183,7 @@ function initLikes() {
     }
   });
 
-  // Like en modal
+  // 🔹 Like en modal
   modalLike.addEventListener("click", async () => {
     if (!currentId) return;
     const ref = doc(db, "likes", currentId);
