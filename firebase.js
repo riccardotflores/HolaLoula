@@ -129,4 +129,67 @@ onAuthStateChanged(auth, (user) => {
   // 🔹 Cada vez que cambia el estado del login, re-renderizamos los comentarios
   renderizarComentarios();
 });
+import { 
+  getFirestore, collection, doc, setDoc, getDoc, updateDoc, onSnapshot 
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const likesRef = collection(db, "likes");
+
+// --- LIKES ---
+function initLikes() {
+  const stories = document.querySelectorAll(".story");
+  const modal = document.getElementById("modal");
+  const modalImg = document.getElementById("modal-img");
+  const modalClose = document.getElementById("modal-close");
+  const modalLike = document.getElementById("modal-like");
+  const modalCount = document.getElementById("modal-count");
+  let currentId = null;
+
+  // Escuchar likes en tiempo real
+  stories.forEach(story => {
+    const id = story.dataset.id;
+    const likeBox = story.querySelector(".like-count");
+    onSnapshot(doc(db, "likes", id), (snap) => {
+      likeBox.textContent = snap.exists() ? snap.data().count : 0;
+    });
+
+    // Abrir modal al clickear
+    story.addEventListener("click", () => {
+      currentId = id;
+      modal.style.display = "flex";
+      modalImg.src = story.querySelector("img").src;
+
+      onSnapshot(doc(db, "likes", id), (snap) => {
+        modalCount.textContent = snap.exists() ? snap.data().count : 0;
+      });
+    });
+  });
+
+  // Cerrar modal
+  modalClose.addEventListener("click", () => {
+    modal.style.display = "none";
+    currentId = null;
+  });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+      currentId = null;
+    }
+  });
+
+  // Like en modal
+  modalLike.addEventListener("click", async () => {
+    if (!currentId) return;
+    const ref = doc(db, "likes", currentId);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      await updateDoc(ref, { count: snap.data().count + 1 });
+    } else {
+      await setDoc(ref, { count: 1 });
+    }
+  });
+}
+
+// Iniciar likes después de cargar la página
+document.addEventListener("DOMContentLoaded", initLikes);
 

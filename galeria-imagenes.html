@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Imágenes - HolaLoula</title>
-    <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería de Imágenes - HolaLoula</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <div id="overlay"></div>
+  <div id="overlay"></div>
 
-    <header>
-        <h1>HolaLoula</h1>
-        <div class="menu-hamburguesa" id="menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
+  <header>
+    <h1>HolaLoula</h1>
+    <div class="menu-hamburguesa" id="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <nav id="nav-menu">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="acerca.html">Acerca de Nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="galeria-imagenes.html">Galería de Imágenes</a></li>
+      <li><a href="galeria-videos.html">Galería de Videos</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="bienvenida">
+      <h2>Galería de Imágenes</h2>
+      <p>Explora nuestros trabajos al estilo historias de Instagram:</p>
+
+      <!-- Carrusel tipo historias -->
+      <div class="stories-container" id="stories">
+        <div class="story" data-id="globo1">
+          <img src="img/globos.jpg" alt="Globos">
+          <div class="like-box"><span class="like-count">0</span> ❤️</div>
         </div>
-    </header>
+        <div class="story" data-id="regalo1">
+          <img src="img/regalos.jpg" alt="Regalos">
+          <div class="like-box"><span class="like-count">0</span> ❤️</div>
+        </div>
+        <div class="story" data-id="evento1">
+          <img src="img/eventos.jpg" alt="Eventos">
+          <div class="like-box"><span class="like-count">0</span> ❤️</div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <nav id="nav-menu">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="acerca.html">Acerca de Nosotros</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-            <li><a href="galeria-imagenes.html">Galería de Imágenes</a></li>
-            <li><a href="galeria-videos.html">Galería de Videos</a></li>
-        </ul>
-    </nav>
+  <!-- Modal imagen ampliada -->
+  <div class="modal" id="modal">
+    <span id="modal-close">&times;</span>
+    <img id="modal-img" src="" alt="Imagen ampliada">
+    <div id="modal-like" class="like-box">❤️ <span id="modal-count">0</span></div>
+  </div>
 
-    <main>
-        <section class="bienvenida">
-            <h2>Galería de Imágenes</h2>
-            <p>Aquí podrás ver algunos de nuestros productos y decoraciones:</p>
-            <div class="cards">
-                <div class="card"><img src="img/globos.jpg" alt="Globos"></div>
-                <div class="card"><img src="img/regalos.jpg" alt="Regalos"></div>
-                <div class="card"><img src="img/eventos.jpg" alt="Eventos"></div>
-            </div>
-        </section>
-    </main>
+  <footer>
+    <p>&copy; 2025 HolaLoula</p>
+  </footer>
 
-    <footer>
-        <p>&copy; 2025 HolaLoula</p>
-    </footer>
-
-    <script src="scripts.js"></script>
+  <script src="scripts.js"></script>
+  <script type="module" src="firebase.js"></script>
 </body>
 </html>
 
